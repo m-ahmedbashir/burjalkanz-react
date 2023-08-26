@@ -2,7 +2,7 @@ import { useDataContext } from "../context/DataContext";
 
 const CurrentDetails = () => {
   const { displayNo, whatsAppNo } = useDataContext();
-  console.log(displayNo, "I am display");
+
   return (
     <>
       <div className="card-body pt-1">

@@ -4,8 +4,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut,
 } from "firebase/auth";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { auth } from "../firebase";
 const AuthContext = createContext();
@@ -59,13 +60,12 @@ export function AuthContextProvider({ children }) {
 
   // user Logout
   const logout = () => {
-    // Perform logout logic and reset the authenticated user
     setAuthUser(null);
+    signOut(auth);
   };
 
   // reset password
   const Resetpassword = (email) => {
-    // Perform logout logic and reset the authenticated user
     sendPasswordResetEmail(auth, email)
       .then((res) => {
         console.log(res);
@@ -75,9 +75,23 @@ export function AuthContextProvider({ children }) {
         setErrorMsg(err.code);
       });
   };
-  const getUsers = () => {
-    // some task
-    setUserList();
+
+  // get add users
+  const getUsers = async () => {
+    try {
+      const usersCollection = collection(db, "users");
+      const querySnapshot = await getDocs(usersCollection);
+
+      const usersData = [];
+      querySnapshot.forEach((doc) => {
+        usersData.push({ id: doc.id, ...doc.data() });
+      });
+
+      setUserList(usersData);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return [];
+    }
   };
 
   const clearErrorMsg = () => {

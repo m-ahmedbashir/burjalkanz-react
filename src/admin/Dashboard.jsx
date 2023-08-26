@@ -7,6 +7,7 @@ import SignUp from "../pages/SignUp";
 import HeaderCard from "./HeaderCard";
 import CurrentDetails from "./CurrentDetails";
 import { useDataContext } from "../context/DataContext";
+
 import { Alert } from "react-bootstrap";
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,15 +16,17 @@ const Dashboard = () => {
   const {
     SetWhatsappNumber,
     SetDisplayNumber,
-    whatsAppNo,
-    displayNo,
     getLatestWhatsAppNumber,
+    getLatestDisplay,
+    message,
+    errorMsg,
   } = useDataContext();
 
   useEffect(() => {
     getLatestWhatsAppNumber();
-    // getDisplayNumber();
+    getLatestDisplay();
   }, []);
+
   return (
     <>
       {isModalOpen && (
@@ -40,7 +43,7 @@ const Dashboard = () => {
       >
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start ">
           <HeaderCard setNavState={setNavState} />
-          <div className="row gx-lg-5 align-items-center mb-5">
+          <div className="row gx-lg-4 align-items-center mb-5">
             <div className="col-lg-4 mb-5 mb-lg-0 " style={{ zIndex: 10 }}>
               <div className="card bg-glass mt-3">
                 <div className="card-body px-4 py-5 px-md-5">
@@ -54,8 +57,8 @@ const Dashboard = () => {
             <div className="col-lg-8 mb-5 mb-lg-0 position-relative">
               <div className="card bg-glass mt-3" style={{ zIndex: 10 }}>
                 <div className="card-body px-2 py-3 px-md-5">
-                  {navState === 2 && (
-                    <Alert type={"info"} text={`${whatsAppNo.inputNo}`} />
+                  {navState === 2 && errorMsg && (
+                    <Alert type={"danger"} text={errorMsg} />
                   )}
                   {navState === 2 && (
                     <div className="d-flex">

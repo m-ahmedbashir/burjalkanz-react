@@ -40,6 +40,7 @@ export function DataContextProvider({ children }) {
   const SetDisplayNumber = (inputNo) => {
     addDoc(collection(db, "displayNumber"), {
       inputNo,
+      timestamp,
     })
       .then((res) => {
         console.log(res);
@@ -60,7 +61,30 @@ export function DataContextProvider({ children }) {
 
       if (!querySnapshot.empty) {
         const latestData = querySnapshot.docs[0].data();
-        return latestData; // Return the latest data
+        setWhatsAppNo(latestData);
+        // return latestData; // Return the latest data
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching latest WhatsApp Number data:", error);
+      return null;
+    }
+  };
+
+  const getLatestDisplay = async () => {
+    try {
+      const q = query(
+        collection(db, "displayNumber"),
+        orderBy("timestamp", "desc"),
+        limit(1)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const latestData = querySnapshot.docs[0].data();
+        setDisplayNo(latestData);
+        // return latestData; // Return the latest data
       } else {
         return null;
       }
@@ -72,7 +96,9 @@ export function DataContextProvider({ children }) {
 
   useEffect(() => {
     getLatestWhatsAppNumber();
+    getLatestDisplay();
   }, []);
+
   return (
     <DataContext.Provider
       value={{
@@ -85,6 +111,7 @@ export function DataContextProvider({ children }) {
         whatsAppNo,
         displayNo,
         getLatestWhatsAppNumber,
+        getLatestDisplay,
       }}
     >
       {children}

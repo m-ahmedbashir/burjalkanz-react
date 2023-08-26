@@ -39,6 +39,14 @@ const SignUp = () => {
       setErrorMsg("Enter a valid email format");
       setErrorType("danger");
       return;
+    } else if (
+      !signInData.email ||
+      !signInData.firstName ||
+      !signInData.lastName ||
+      signInData.password
+    ) {
+      setErrorMsg("Please Check input field, Something is missing");
+      setErrorType("danger");
     } else if (error) {
       setErrorMsg(error.split("-").join(" "));
       setErrorType("danger");

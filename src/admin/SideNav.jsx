@@ -2,7 +2,9 @@ import React from "react";
 import { MdLogout } from "react-icons/md";
 import { Navbar, Nav } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
+import { useAuthContext } from "../context/AuthContext";
 const SideNav = ({ setNavState }) => {
+  const { logout } = useAuthContext();
   return (
     <Navbar variant="dark" expand="md">
       <Navbar.Brand className="text-dark">Menu</Navbar.Brand>
@@ -22,7 +24,10 @@ const SideNav = ({ setNavState }) => {
           </Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link className="text-white btn btn-danger pl-3 pr-3 pt-2 pb-2">
+          <Nav.Link
+            className="text-white btn btn-danger pl-3 pr-3 pt-2 pb-2"
+            onClick={logout}
+          >
             Log Out <MdLogout className="ml-1" />
           </Nav.Link>
         </Nav>

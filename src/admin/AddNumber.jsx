@@ -1,11 +1,18 @@
 import { useState } from "react";
-
+import { toast } from "react-toastify";
 const AddNumber = ({ title, handleSubmit }) => {
   const [inputNo, setInputNo] = useState("");
 
   const submitNumber = (e) => {
     e.preventDefault();
-    handleSubmit(inputNo);
+    if (!inputNo) {
+      toast.error("Phone Number Input is required");
+      return;
+    } else {
+      handleSubmit(inputNo);
+      toast.success("Phone No added");
+      setInputNo("");
+    }
   };
   return (
     <div className="row align-center mx-auto">

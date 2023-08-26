@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useAuthContext } from "../context/AuthContext";
+
 const UserTable = () => {
+  const { getUsers, userList } = useAuthContext();
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+    return date.toLocaleString(); // Format the date as a readable string
+  };
+
+  console.log(userList, "I am get USer");
   return (
     <>
       <text className="font-weight-bold lead">Registered User</text>
@@ -15,13 +29,16 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>john@example.com</td>
-                <td>Doe</td>
-                <td>18, June</td>
-              </tr>
+              {userList.length !== 0 &&
+                userList.map((data, idx) => (
+                  <tr key={data.id}>
+                    <td>{idx + 1}</td>
+                    <td>{`${data.firstName} ${data.lastName}`}</td>
+                    <td>{data.email}</td>
+                    <td>{data.addedBy}</td>
+                    <td>{formatDate(data.addedOn.seconds)}</td>
+                  </tr>
+                ))}
               {/* Add more rows as needed */}
             </tbody>
           </table>

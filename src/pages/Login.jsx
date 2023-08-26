@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./style.css";
 import Alert from "../components/Alert";
+import { toast } from "react-toastify";
+
 import { useAuthContext } from "../context/AuthContext";
 import SlideAnimation from "../animation/SlideAnimation";
 import { useNavigate } from "react-router-dom";
@@ -61,6 +63,11 @@ const Login = () => {
       setErrorMsg("");
       setErrorType("");
       login(signInData);
+      toast("Welcome", {
+        position: "top-center",
+        autoClose: 1000,
+        theme: "dark",
+      });
     }
   };
 
