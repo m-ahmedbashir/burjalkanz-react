@@ -1,0 +1,24 @@
+.switch {
+    width: 55px;
+    height: 25px;
+    background-color: rgba(134, 103, 213, 0.4);
+    display: flex;
+    justify-content: flex-start;
+    align-items: 'center';
+    border-radius: 50px;
+    padding: 6px;
+    cursor: pointer;
+  }
+  
+  .switch[data-isOn="true"] {
+    justify-content: flex-end;
+  }
+  
+  .handle {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    border-radius: 40px;
+    top: "-10px";
+  }
+  
