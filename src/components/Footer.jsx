@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDataContext } from "../context/DataContext";
+
 const Footer = () => {
+  const { displayNo, loading } = useDataContext();
+
   const date = new Date();
   return (
     <>
@@ -54,10 +58,18 @@ const Footer = () => {
                   <img src="images/logo.png" alt="" className="w-50" />
                 </div>
                 <h6>
-                  <a href="mailto:burjalkanz@gmail.com">info@burjalkanz.com</a>
+                  <a href="mailto:info@burjalkanz.com">info@burjalkanz.com</a>
                 </h6>
-                <a href="tel:+971 43553385">
-                  <span className="text-color h4">+971 43553385</span>
+                <a
+                  href={`tel:${
+                    displayNo.inputNo ? displayNo.inputNo : "+971 43553385"
+                  }`}
+                >
+                  <span className="text-color h4">
+                    {displayNo.inputNo
+                      ? `+${displayNo.inputNo}`
+                      : "+971 43553385"}
+                  </span>
                 </a>
               </div>
             </div>
@@ -67,8 +79,13 @@ const Footer = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="copyright text-center">
-                  &copy;{date.getUTCFullYear()} Reserved to
-                  <span className="text-color">Burj-Al-Kanz.</span>
+                  &copy;{date.getUTCFullYear()} Reserved to{" "}
+                  <Link
+                    className="text-color text-decoration-none"
+                    to={"/login"}
+                  >
+                    Burj-Al-Kanz.
+                  </Link>
                 </div>
               </div>
             </div>

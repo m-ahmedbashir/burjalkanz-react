@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./style.css";
 import Alert from "../components/Alert";
 import { useAuthContext } from "../context/AuthContext";
+import Model from "../components/Model";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [signInData, setSignUpData] = useState({
@@ -13,14 +13,9 @@ const SignUp = () => {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [errorType, setErrorType] = useState("");
+  const [isModalOpen, setIsModelOpen] = useState(false);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  const {
-    authUser,
-    Register,
-    errorMsg: error,
-    clearErrorMsg,
-    message,
-  } = useAuthContext();
+  const { Register, errorMsg: error, getUsers } = useAuthContext();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -43,7 +38,7 @@ const SignUp = () => {
       !signInData.email ||
       !signInData.firstName ||
       !signInData.lastName ||
-      signInData.password
+      !signInData.password
     ) {
       setErrorMsg("Please Check input field, Something is missing");
       setErrorType("danger");
@@ -54,17 +49,24 @@ const SignUp = () => {
       setErrorMsg("User Created Successfully");
       setErrorType("success");
       Register(signInData);
-      setSignUpData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-      });
+      getUsers();
+      setIsModelOpen(false);
     }
   };
 
   return (
     <div className="">
+      {isModalOpen && (
+        <Model
+          isModalOpen={isModalOpen}
+          closeModal={() => setIsModelOpen(false)}
+          title={"Confirmation"}
+          description={
+            "You are going to register a new user. This user will be able to change details on the website. A confimation email to this email will be sent. New user needs to confirm email to activate his email before using dashboard. Are you sure you want to Add User. "
+          }
+          handleSubmit={handleSignup}
+        />
+      )}
       <div className=" px-4 py-5 px-md-5">
         <text className="font-weight-bold lead ">Register New User</text>
         {errorMsg && <Alert type={errorType} text={errorMsg} />}
@@ -138,7 +140,7 @@ const SignUp = () => {
           {/* Submit button */}
           <button
             type="button"
-            onClick={handleSignup}
+            onClick={() => setIsModelOpen(true)}
             className="btn btn-primary btn-block mb-4"
           >
             Register User

@@ -25,27 +25,31 @@ export function DataContextProvider({ children }) {
   };
 
   const SetWhatsappNumber = (inputNo) => {
+    setLoading(true);
     addDoc(collection(db, "whatsappNumber"), {
       inputNo,
       timestamp,
     })
       .then((res) => {
-        console.log(res);
+        setLoading(false);
       })
       .catch((err) => {
         setErrorMsg(err.code);
+        setLoading(false);
       });
   };
 
   const SetDisplayNumber = (inputNo) => {
+    setLoading(true);
     addDoc(collection(db, "displayNumber"), {
       inputNo,
       timestamp,
     })
       .then((res) => {
-        console.log(res);
+        setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         setErrorMsg(err.code);
       });
   };

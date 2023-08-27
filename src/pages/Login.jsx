@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./style.css";
 import Alert from "../components/Alert";
 import { toast } from "react-toastify";
-
+import Loader from "../components/Loader";
 import { useAuthContext } from "../context/AuthContext";
 import SlideAnimation from "../animation/SlideAnimation";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ const Login = () => {
     errorMsg: error,
     clearErrorMsg,
     Resetpassword,
+    loading,
   } = useAuthContext();
 
   const navigate = useNavigate();
@@ -63,11 +64,6 @@ const Login = () => {
       setErrorMsg("");
       setErrorType("");
       login(signInData);
-      toast("Welcome", {
-        position: "top-center",
-        autoClose: 1000,
-        theme: "dark",
-      });
     }
   };
 
@@ -82,8 +78,7 @@ const Login = () => {
       setErrorType("danger");
     } else {
       Resetpassword(signInData.email);
-      setErrorMsg("Email sent");
-      setErrorType("success");
+      toast.success("Email Sent, Please check you email");
     }
   };
 
@@ -197,6 +192,7 @@ const Login = () => {
                     )}
 
                     {/* Submit button */}
+
                     <button
                       type="button"
                       onClick={
@@ -204,7 +200,17 @@ const Login = () => {
                       }
                       className="btn btn-primary btn-block mb-4"
                     >
-                      {forgetPassword ? "Reset Password" : "Login"}
+                      {loading ? (
+                        <Loader color={"black"} />
+                      ) : forgetPassword ? (
+                        loading ? (
+                          <Loader color={"black"} />
+                        ) : (
+                          "Reset Password"
+                        )
+                      ) : (
+                        "Login"
+                      )}
                     </button>
                   </form>
                 </div>

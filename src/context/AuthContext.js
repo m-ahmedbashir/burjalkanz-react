@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
@@ -21,13 +22,16 @@ export function AuthContextProvider({ children }) {
   const Register = async (signInData) => {
     const { firstName, lastName, email, password } = signInData;
     // Perform login logic and set the authenticated user
+    setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         setAuthUser(res.user);
         setMessage("User Created Successfully");
+        setLoading(false);
       })
       .catch((err) => {
         setErrorMsg(err.code);
+        setLoading(false);
       });
 
     addDoc(collection(db, "users"), {
@@ -36,42 +40,45 @@ export function AuthContextProvider({ children }) {
       email,
       addedBy: authUser?.email,
       addedOn: Timestamp.now(),
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        setErrorMsg(err.code);
-      });
+    }).catch((err) => {
+      setErrorMsg(err.code);
+    });
   };
 
   // login with credentials
   const login = (user) => {
     const { email, password } = user;
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         setAuthUser(res.user);
         setMessage("Welcome");
+        setLoading(false);
       })
       .catch((err) => {
         setErrorMsg(err.code);
+        setLoading(false);
       });
   };
 
   // user Logout
   const logout = () => {
     setAuthUser(null);
+    setLoading(true);
     signOut(auth);
+    setLoading(false);
   };
 
   // reset password
   const Resetpassword = (email) => {
+    setLoading(true);
     sendPasswordResetEmail(auth, email)
       .then((res) => {
-        console.log(res);
+        setLoading(false);
         setMessage("Email sent. Please check Your email ");
       })
       .catch((err) => {
+        setLoading(false);
         setErrorMsg(err.code);
       });
   };
@@ -80,6 +87,7 @@ export function AuthContextProvider({ children }) {
   const getUsers = async () => {
     try {
       const usersCollection = collection(db, "users");
+      setLoading(true);
       const querySnapshot = await getDocs(usersCollection);
 
       const usersData = [];
@@ -87,13 +95,26 @@ export function AuthContextProvider({ children }) {
         usersData.push({ id: doc.id, ...doc.data() });
       });
 
+      setLoading(false);
       setUserList(usersData);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      setErrorMsg(error.message);
+      setLoading(false);
       return [];
     }
   };
 
+  const verifyEmail = () => {
+    setLoading(true);
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setErrorMsg(err.code);
+      });
+  };
   const clearErrorMsg = () => {
     setErrorMsg("");
     setMessage("");
@@ -113,6 +134,7 @@ export function AuthContextProvider({ children }) {
         errorMsg,
         clearErrorMsg,
         message,
+        verifyEmail,
       }}
     >
       {children}

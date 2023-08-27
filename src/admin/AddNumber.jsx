@@ -1,21 +1,44 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useDataContext } from "../context/DataContext";
+import Loader from "../components/Loader";
+import Model from "../components/Model";
 const AddNumber = ({ title, handleSubmit }) => {
   const [inputNo, setInputNo] = useState("");
+  const [isModalOpen, setIsModelOpen] = useState(false);
+  const phoneRegex = /^\+\d{1,3}\d{9,}$/;
+
+  const { loading, getLatestDisplay, getLatestWhatsAppNumber } =
+    useDataContext();
 
   const submitNumber = (e) => {
     e.preventDefault();
     if (!inputNo) {
-      toast.error("Phone Number Input is required");
+      setIsModelOpen(false);
+      toast.error("Phone number is not provided");
       return;
+    } else if (phoneRegex.test(inputNo)) {
+      toast.error("Please enter a valid number with country code");
     } else {
+      setIsModelOpen(false);
       handleSubmit(inputNo);
+      getLatestWhatsAppNumber();
+      getLatestDisplay();
       toast.success("Phone No added");
       setInputNo("");
     }
   };
   return (
     <div className="row align-center mx-auto">
+      {isModalOpen && (
+        <Model
+          isModalOpen={isModalOpen}
+          closeModal={() => setIsModelOpen(false)}
+          title={"Change No"}
+          description={"Are You Sure You want to change No"}
+          handleSubmit={submitNumber}
+        />
+      )}
       <div className="col-md-6 m-1 border mx-auto p-4 ">
         <text className="font-weight-bold lead">{title}</text>
         <form className="mt-3">
@@ -35,9 +58,9 @@ const AddNumber = ({ title, handleSubmit }) => {
           <button
             type="button"
             className="btn btn-primary btn-block mb-4"
-            onClick={submitNumber}
+            onClick={() => setIsModelOpen(true)}
           >
-            Add Number
+            {loading ? <Loader color={"black"} /> : "Add Number"}
           </button>
         </form>
       </div>

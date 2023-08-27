@@ -1,4 +1,7 @@
+import { useDataContext } from "../context/DataContext";
+import { CiMobile1 } from "react-icons/ci";
 const Cta = () => {
+  const { displayNo } = useDataContext();
   return (
     <>
       <section className="section cta">
@@ -14,7 +17,10 @@ const Cta = () => {
                   Have any project on mind? For immidiate support :
                 </p>
                 <h3>
-                  <i className="ti-mobile mr-3 text-color"></i>+971 504191748
+                  <i className="ti-mobile  text-color">
+                    <CiMobile1 className="mb-1 mr-1 " size={40} />
+                  </i>
+                  {displayNo.inputNo ? `+${displayNo.inputNo}` : "+925154454"}
                 </h3>
               </div>
             </div>

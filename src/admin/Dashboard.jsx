@@ -7,8 +7,11 @@ import SignUp from "../pages/SignUp";
 import HeaderCard from "./HeaderCard";
 import CurrentDetails from "./CurrentDetails";
 import { useDataContext } from "../context/DataContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import { Alert } from "react-bootstrap";
+import EmailVerifyHeader from "./EmailVerifyHeader";
+import ErrorModel from "../components/ErrorModel";
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [navState, setNavState] = useState(1);
@@ -22,6 +25,16 @@ const Dashboard = () => {
     errorMsg,
   } = useDataContext();
 
+  const { authUser } = useAuthContext();
+  const showPolicy = JSON.parse(localStorage.getItem("showPolicy"));
+
+  if (showPolicy === null || showPolicy === undefined) {
+    localStorage.setItem("showPolicy", JSON.stringify(true));
+  }
+
+  const handlePrivacyClick = () => {
+    localStorage.setItem("showPolicy", JSON.stringify(false));
+  };
   useEffect(() => {
     getLatestWhatsAppNumber();
     getLatestDisplay();
@@ -37,13 +50,26 @@ const Dashboard = () => {
           description={"Welcome to the admin panel"}
         />
       )}
+
+      {showPolicy && (
+        <ErrorModel
+          isModalOpen={true}
+          title={"Privacy and Security Assurance:"}
+          description={
+            "Your privacy and security are of utmost importance to us. We want to assure you that we do not retain or store your login credentials in any form. When you log in to our platform, rest assured that your sensitive information remains confidential and is never saved on our servers. As a security measure, please note that you will be required to log in again if you refresh the page or close the tab. This ensures an added layer of protection for your account and data. We are committed to maintaining the highest standards of privacy and security, and this practice reflects our dedication to safeguarding your online experience. Thank you for entrusting us with your information."
+          }
+          handleSubmit={handlePrivacyClick}
+        />
+      )}
+
       <section
         className="background-radial-gradient overflow-hidden"
         style={{ minHeight: "100vh" }}
       >
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start ">
+          {authUser.emailVerified === false && <EmailVerifyHeader />}
           <HeaderCard setNavState={setNavState} />
-          <div className="row gx-lg-4 align-items-center mb-5">
+          <div className="row gx-lg-4 mb-5">
             <div className="col-lg-4 mb-5 mb-lg-0 " style={{ zIndex: 10 }}>
               <div className="card bg-glass mt-3">
                 <div className="card-body px-4 py-5 px-md-5">

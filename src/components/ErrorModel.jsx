@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-const Model = ({
+const ErrorModel = ({
   isModalOpen,
   closeModal,
   title,
@@ -9,25 +9,18 @@ const Model = ({
 }) => {
   return (
     <>
-      <Modal show={isModalOpen} onHide={closeModal}>
+      <Modal show={isModalOpen}>
         <Modal.Header className="text-center">
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{description}</Modal.Body>
         <Modal.Footer>
           <Button
-            variant="secondary"
-            className="pl-4 pr-4 pt-2 pb-2"
-            onClick={closeModal}
-          >
-            No
-          </Button>{" "}
-          <Button
             variant="danger"
             className="pl-4 pr-4 pt-2 pb-2"
             onClick={handleSubmit}
           >
-            Yes
+            Don't Show me Again
           </Button>
         </Modal.Footer>
       </Modal>
@@ -35,4 +28,4 @@ const Model = ({
   );
 };
 
-export default Model;
+export default ErrorModel;

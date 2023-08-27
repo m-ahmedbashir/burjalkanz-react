@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
-
+import Loader from "../components/Loader";
+import Alert from "../components/Alert";
 const UserTable = () => {
-  const { getUsers, userList } = useAuthContext();
+  const { getUsers, userList, loading } = useAuthContext();
   useEffect(() => {
     getUsers();
   }, []);
@@ -12,7 +13,6 @@ const UserTable = () => {
     return date.toLocaleString(); // Format the date as a readable string
   };
 
-  console.log(userList, "I am get USer");
   return (
     <>
       <text className="font-weight-bold lead">Registered User</text>
@@ -29,7 +29,12 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {userList.length !== 0 &&
+              {loading ? (
+                <Loader color={"black"} />
+              ) : userList.length === 0 ? (
+                <Alert type={"info"} text={"User List is available"} />
+              ) : (
+                userList.length !== 0 &&
                 userList.map((data, idx) => (
                   <tr key={data.id}>
                     <td>{idx + 1}</td>
@@ -38,7 +43,8 @@ const UserTable = () => {
                     <td>{data.addedBy}</td>
                     <td>{formatDate(data.addedOn.seconds)}</td>
                   </tr>
-                ))}
+                ))
+              )}
               {/* Add more rows as needed */}
             </tbody>
           </table>

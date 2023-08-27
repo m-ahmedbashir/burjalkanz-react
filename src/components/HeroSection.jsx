@@ -10,13 +10,20 @@ const HeroSection = () => {
             <div className="row">
               <div className="col-lg-9 col-md-10">
                 <div className="block">
-                  <span className="d-block mb-3 text-white text-capitalize">
-                    Prepare for new future
-                  </span>
+                  <TransitionAnimation left={-700}>
+                    <span className="d-block mb-3 text-white text-capitalize">
+                      Prepare for new future
+                    </span>
+                  </TransitionAnimation>
+
                   <h1 className="animated fadeInUp mb-5">
-                    Our work is <br />
-                    presentation of our <br />
-                    capabilities.
+                    <TransitionAnimation left={-650}>
+                      Our work is <br />
+                      presentation of our <br />
+                    </TransitionAnimation>
+                    <TransitionAnimation left={-630}>
+                      capabilities.
+                    </TransitionAnimation>
                   </h1>
                   <Link
                     to="/services"
