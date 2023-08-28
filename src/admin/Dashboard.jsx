@@ -98,7 +98,7 @@ const Dashboard = () => {
                   {navState === 2 && (
                     <AddNumber
                       title={
-                        isOn ? "Add Display Number" : "Add WhatsApp Numbers"
+                        isOn ? "Add Display Number" : "Add WhatsApp Number"
                       }
                       handleSubmit={isOn ? SetDisplayNumber : SetWhatsappNumber}
                     />
