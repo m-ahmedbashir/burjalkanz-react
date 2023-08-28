@@ -8,6 +8,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { auth } from "../firebase";
 const AuthContext = createContext();
@@ -52,11 +53,12 @@ export function AuthContextProvider({ children }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         setAuthUser(res.user);
+        setErrorMsg("");
         setMessage("Welcome");
         setLoading(false);
       })
       .catch((err) => {
-        setErrorMsg(err.code);
+        toast.error(`${err.code}`);
         setLoading(false);
       });
   };

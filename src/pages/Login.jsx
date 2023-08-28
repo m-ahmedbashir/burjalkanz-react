@@ -38,6 +38,8 @@ const Login = () => {
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
+    setErrorMsg("");
+    setErrorType("");
     setSignInData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -50,15 +52,13 @@ const Login = () => {
     }
   }, [authUser]);
 
+  useEffect(() => {}, [error]);
   // handle user Login
   const handleLogin = (e) => {
     e.preventDefault();
+    console.log(signInData, "I am data");
     if (!emailRegex.test(signInData.email)) {
       setErrorMsg("Enter a valid email format");
-      setErrorType("danger");
-      return;
-    } else if (error) {
-      setErrorMsg(error.split("-").join(" "));
       setErrorType("danger");
     } else {
       setErrorMsg("");
