@@ -20,7 +20,9 @@ const Cta = () => {
                   <i className="ti-mobile  text-color">
                     <CiMobile1 className="mb-1 mr-1 " size={40} />
                   </i>
-                  {displayNo.inputNo ? `+${displayNo.inputNo}` : "+925154454"}
+                  {displayNo.inputNo
+                    ? `+${displayNo.inputNo}`
+                    : "+971 551459531"}
                 </h3>
               </div>
             </div>

@@ -51,16 +51,17 @@ const Dashboard = () => {
         />
       )}
 
-      {showPolicy && (
+      {/*privacy && (
         <ErrorModel
-          isModalOpen={true}
+          isModalOpen={privacy}
           title={"Privacy and Security Assurance:"}
           description={
             "Your privacy and security are of utmost importance to us. We want to assure you that we do not retain or store your login credentials in any form. When you log in to our platform, rest assured that your sensitive information remains confidential and is never saved on our servers. As a security measure, please note that you will be required to log in again if you refresh the page or close the tab. This ensures an added layer of protection for your account and data. We are committed to maintaining the highest standards of privacy and security, and this practice reflects our dedication to safeguarding your online experience. Thank you for entrusting us with your information."
           }
+          closeModal={() => setPrivacy(false)}
           handleSubmit={handlePrivacyClick}
         />
-      )}
+        )*/}
 
       <section
         className="background-radial-gradient overflow-hidden"

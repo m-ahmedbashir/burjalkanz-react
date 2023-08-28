@@ -32,7 +32,7 @@ const UserTable = () => {
               {loading ? (
                 <Loader color={"black"} />
               ) : userList.length === 0 ? (
-                <Alert type={"info"} text={"User List is available"} />
+                <Alert type={"info"} text={"User List is unavailable"} />
               ) : (
                 userList.length !== 0 &&
                 userList.map((data, idx) => (

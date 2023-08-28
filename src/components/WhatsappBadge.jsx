@@ -8,7 +8,7 @@ const WhatsappBadge = () => {
       <div id="scroll-to-top" className="scroll-to-top">
         <Link
           to={`https://wa.me/${
-            whatsAppNo.inputNo ? whatsAppNo.inputNo : "971522176898"
+            whatsAppNo.inputNo ? whatsAppNo.inputNo : "971551459531"
           }`}
           className="text-white w-50% p-3 text-center"
         >

@@ -62,13 +62,13 @@ const Footer = () => {
                 </h6>
                 <a
                   href={`tel:${
-                    displayNo.inputNo ? displayNo.inputNo : "+971 43553385"
+                    displayNo.inputNo ? displayNo.inputNo : "+971 551459531"
                   }`}
                 >
                   <span className="text-color h4">
                     {displayNo.inputNo
                       ? `+${displayNo.inputNo}`
-                      : "+971 43553385"}
+                      : "+971 551459531"}
                   </span>
                 </a>
               </div>
