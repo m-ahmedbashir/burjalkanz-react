@@ -55,7 +55,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="">
+    <div id="new-user">
       {isModalOpen && (
         <Model
           isModalOpen={isModalOpen}

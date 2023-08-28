@@ -56,7 +56,6 @@ const Login = () => {
   // handle user Login
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(signInData, "I am data");
     if (!emailRegex.test(signInData.email)) {
       setErrorMsg("Enter a valid email format");
       setErrorType("danger");

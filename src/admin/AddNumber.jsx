@@ -39,7 +39,7 @@ const AddNumber = ({ title, handleSubmit }) => {
           handleSubmit={submitNumber}
         />
       )}
-      <div className="col-md-6 m-1 border mx-auto p-4 ">
+      <div className="col-md-6 m-1 border mx-auto p-4 " id="number">
         <text className="font-weight-bold lead">{title}</text>
         <form className="mt-3">
           <div className="form-outline mb-4">

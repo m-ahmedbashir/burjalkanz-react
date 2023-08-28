@@ -13,13 +13,25 @@ const SideNav = ({ setNavState }) => {
       </Navbar.Toggle>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link className="text-dark" onClick={() => setNavState(1)}>
+          <Nav.Link
+            className="text-dark"
+            href="#users"
+            onClick={() => setNavState(1)}
+          >
             All Users
           </Nav.Link>
-          <Nav.Link className="text-dark" onClick={() => setNavState(2)}>
+          <Nav.Link
+            className="text-dark"
+            href="#number"
+            onClick={() => setNavState(2)}
+          >
             Add number
           </Nav.Link>
-          <Nav.Link className="text-dark" onClick={() => setNavState(3)}>
+          <Nav.Link
+            className="text-dark"
+            href="#new-user"
+            onClick={() => setNavState(3)}
+          >
             Register new user
           </Nav.Link>
         </Nav>

@@ -17,7 +17,7 @@ const UserTable = () => {
     <>
       <text className="font-weight-bold lead">Registered User</text>
       <div className="container mt-4">
-        <div className="table-responsive">
+        <div className="table-responsive" id="users">
           <table className="table">
             <thead>
               <tr>
